@@ -64,7 +64,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Prepare the SIDE Metric
-Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation. The folder can be downloaded from [https://drive.google.com/drive/folders/1QdxrYnelt9poi45eLT5xgObihDRb_OtV]. This is a fine-tuned SIDE model created by Antonio Mastropaolo detailed here: [https://github.com/antonio-mastropaolo/code-summarization-metric].
+Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation. The folder can be downloaded from https://drive.google.com/drive/folders/1QdxrYnelt9poi45eLT5xgObihDRb_OtV. This is a fine-tuned SIDE model created by Antonio Mastropaolo detailed here: https://github.com/antonio-mastropaolo/code-summarization-metric.
 
 ### 3. Execution
 Run the `assignment-2-LSTM.ipynb` notebook. The script will:
