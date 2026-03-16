@@ -34,7 +34,7 @@ The model follows a classic Encoder-Decoder architecture implemented in PyTorch:
 - **Embeddings:** A pre-trained **32,100 × 768** matrix from CodeT5+, frozen during training to preserve semantic knowledge.
 - **Encoder:** A 2-layer Bi-LSTM with a hidden dimension of 256 and 20% dropout.
 - **Decoder:** A 2-layer LSTM that uses **Teacher Forcing** during training to predict the next token in the sequence.
-- **Early Stopping:** Training is governed by the **BLEU-1 score** on the validation set. If BLEU-1 does not improve for **3 consecutive epochs**, training is terminated to prevent overfitting.
+- **Early Stopping:** Training is governed by the **BLEU-1 score** on the validation set. If BLEU-1 does not improve for **3 epochs**, training is terminated to prevent overfitting.
 
 ---
 
