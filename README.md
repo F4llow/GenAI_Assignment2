@@ -9,7 +9,7 @@
 
 ## Project Overview
 
-The goal of this project is to implement an LSTM model that can generate natural language summaries for Java methods. The system utilizes a Seq2Seq architecture with pre-trained embeddings to understand code semantics.
+The goal of this project is to implement an LSTM-based Sequence-to-Sequence (Seq2Seq) model capable of generating concise natural language summaries for Java methods. By leveraging pre-trained **CodeT5+** embeddings, the model maps complex code structures to human-readable documentation.
 
 ---
 
@@ -17,67 +17,63 @@ The goal of this project is to implement an LSTM model that can generate natural
 
 ### Corpus Construction
 - Mined public GitHub repositories to construct a custom dataset of Java methods.
+- **Dataset Size:** ~50,000 training pairs, 1,000 validation samples, and 1,000 test samples.
 
-### Requirements
-- Built a dataset consisting of ~50,000 code-summary pairs for training and 1,000 samples for validation.
-
-### Pre-processing
-- Java methods were flattened into single whitespace-normalized lines.
-- All summaries were converted to lowercase.
-- Quality filters were applied to remove non-ASCII characters and limit token counts to ensure high-quality training data.
-
----
-
-## Installation & Reproducibility
-
-To reproduce the model training and evaluation:
-
-### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Generate Embeddings
-
-Run the provided `get_codet5_embeddings.py` script to tokenize the data and extract the CodeT5+ embedding matrix:
-
-```bash
-python get_codet5_embeddings.py --input <source_file>.txt --output <output_file>.pt
-```
-
-### 3. Run Notebook
-
-Execute the `assignment-2-LSTM.ipynb` notebook from top to bottom.
+### Pre-processing Pipeline
+- **Flattening:** Java methods were stripped of newlines and normalized to single whitespace lines.
+- **Normalization:** All summaries were converted to lowercase to reduce vocabulary sparsity.
+- **Filtering:** Applied quality filters to remove non-ASCII characters and outlier samples with extreme token lengths.
+- **Tokenization:** Utilized the `Salesforce/codet5p-220m` tokenizer for consistent embedding alignment.
 
 ---
 
 ## Model Architecture
 
-- **Architecture:** LSTM encoder-decoder following the course notebook structure.
-- **Decoder:** Adapted to generate natural language tokens instead of code tokens.
-- **Embeddings:** Uses a **32,100 × 768** pre-trained embedding matrix from CodeT5+.
-- **Training Logic:** Includes early stopping based on the **BLEU-1 score** computed on the validation set.
+The model follows a classic Encoder-Decoder architecture implemented in PyTorch:
+
+- **Embeddings:** A pre-trained **32,100 × 768** matrix from CodeT5+, frozen during training to preserve semantic knowledge.
+- **Encoder:** A 2-layer Bi-LSTM with a hidden dimension of 256 and 20% dropout.
+- **Decoder:** A 2-layer LSTM that uses **Teacher Forcing** during training to predict the next token in the sequence.
+- **Early Stopping:** Training is governed by the **BLEU-1 score** on the validation set. If BLEU-1 does not improve for **3 consecutive epochs**, training is terminated to prevent overfitting.
 
 ---
 
-## Evaluation Metrics
+## Evaluation Results
 
-The final model is evaluated on the test set using the following metrics:
+The final model was evaluated on the held-out test set using standard NLP metrics and the **SIDE** (Summary alIgnment to coDe sEmantics) metric developed specifically for code summarization.
 
-- **BLEU-1**
-- **BLEU-2**
-- **BLEU-3**
-- **BLEU-4**
-- **METEOR**
-- **BERTScore**
-- **SIDE**
+| Metric | Score |
+| :--- | :--- |
+| **BLEU-1** | 27.12 |
+| **BLEU-2** | 19.09 |
+| **BLEU-3** | 14.64 |
+| **BLEU-4** | 11.91 |
+| **METEOR** | 0.2412 |
+| **BERTScore (F1)** | 0.8572 |
+| **SIDE Score** | 0.6623 |
+
+---
+
+## Installation & Reproducibility
+
+### 1. Install Dependencies
+```bash
+pip install torch sacrebleu bert-score nltk transformers tqdm
+```
+
+### 2. Prepare the SIDE Metric
+Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation.
+
+### 3. Execution
+Run the `assignment-2-LSTM.ipynb` notebook. The script will:
+1. Load the pre-processed `.pt` dataset.
+2. Initialize the LSTM model with frozen CodeT5+ embeddings.
+3. Execute the training loop with BLEU-1 monitoring.
+4. Generate final predictions and compute all seven evaluation metrics.
 
 ---
 
 ## Outputs
 
-Outputs are saved in the main directory:
-
-- `best_lstm_model.pt` — Model checkpoint with the highest validation BLEU-1.
-- `assignment2_predictions.json` — Generated summaries for the instructor-provided test set.
+- `best_lstm_model4.pt` — The saved weights of the best-performing model based on validation BLEU-1.
+- `assignment4_predictions.json` — A JSON file containing method IDs, original code, human references, and the model's generated predictions.
