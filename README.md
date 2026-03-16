@@ -40,7 +40,7 @@ The model follows a classic Encoder-Decoder architecture implemented in PyTorch:
 
 ## Evaluation Results
 
-The final model was evaluated on the created test set using standard NLP metrics and the **SIDE** (Summary alIgnment to coDe sEmantics) metric developed specifically for code summarization.
+The final model was evaluated on the created test set using standard NLP metrics and the **SIDE** (Summary alIgnment to coDe sEmantics) metric developed specifically for code summarization. For evaluating using the provided test set, please uncomment the lines in cell 10. To make the notebook easier to run completely through, I did not want the program to rely on this external test set being present.
 
 Here are the scores of the best model I found:
 
@@ -60,11 +60,11 @@ Here are the scores of the best model I found:
 
 ### 1. Install Dependencies
 ```bash
-pip install torch sacrebleu bert-score nltk transformers tqdm
+pip install -r requirements.txt
 ```
 
 ### 2. Prepare the SIDE Metric
-Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation.
+Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation. The folder can be downloaded from [https://drive.google.com/drive/folders/1QdxrYnelt9poi45eLT5xgObihDRb_OtV]. This is a fine-tuned SIDE model created by Antonio Mastropaolo detailed here: [https://github.com/antonio-mastropaolo/code-summarization-metric].
 
 ### 3. Execution
 Run the `assignment-2-LSTM.ipynb` notebook. The script will:
@@ -77,5 +77,5 @@ Run the `assignment-2-LSTM.ipynb` notebook. The script will:
 
 ## Outputs
 
-- `best_lstm_model4.pt` — The saved weights of the best-performing model based on validation BLEU-1.
-- `assignment4_predictions.json` — A JSON file containing method IDs, original code, human references, and the model's generated predictions.
+- `best_lstm_model.pt` — The saved weights of the best-performing model based on validation BLEU-1.
+- `assignment2_predictions.json` — A JSON file containing method IDs, original code, human references, and the model's generated predictions.
