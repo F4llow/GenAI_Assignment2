@@ -55,16 +55,20 @@ Here are the scores of the best model I found:
 | **SIDE Score** | 0.6623 |
 
 ---
-
 ## Installation & Reproducibility
 
-### 1. Install Dependencies
+### 1. Prerequisites
+- **Python 3.9** (Required for compatibility with specific library versions used in this environment).
+
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Prepare the SIDE Metric
-Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation. The folder can be downloaded from https://drive.google.com/drive/folders/1QdxrYnelt9poi45eLT5xgObihDRb_OtV. This is a fine-tuned SIDE model created by Antonio Mastropaolo detailed here: https://github.com/antonio-mastropaolo/code-summarization-metric.
+### 3. Prepare the SIDE Metric
+Ensure the fine-tuned SIDE model weights are located in the `./side_model/` directory. These are required for the semantic alignment evaluation. 
+- **Model Weights:** The folder can be downloaded from [this Google Drive link](https://drive.google.com/drive/folders/1QdxrYnelt9poi45eLT5xgObihDRb_OtV). 
+- **Background:** This is a fine-tuned SIDE model created by Antonio Mastropaolo, detailed in the [official repository](https://github.com/antonio-mastropaolo/code-summarization-metric).
 
 ### 3. Execution
 Run the `assignment-2-LSTM.ipynb` notebook. The script will:
