@@ -40,7 +40,9 @@ The model follows a classic Encoder-Decoder architecture implemented in PyTorch:
 
 ## Evaluation Results
 
-The final model was evaluated on the held-out test set using standard NLP metrics and the **SIDE** (Summary alIgnment to coDe sEmantics) metric developed specifically for code summarization.
+The final model was evaluated on the created test set using standard NLP metrics and the **SIDE** (Summary alIgnment to coDe sEmantics) metric developed specifically for code summarization.
+
+Here are the scores of the best model I found:
 
 | Metric | Score |
 | :--- | :--- |
